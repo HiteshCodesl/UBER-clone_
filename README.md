@@ -12,12 +12,11 @@ POST /users/register
 ```json
 {
   "fullname": {
-    "firstname": "John",    // Required, min 3 characters
-    "lastname": "Doe"       // Optional, min 3 characters
+    "firstname": "John",    
+    "lastname": "Doe"       
   },
-  "email": "john@doe.com",  // Required, min 5 characters
-  "password": "secret123"   // Required, min 6 characters
-}
+  "email": "john@doe.com",  
+  "password": "secret123"   
 ```
 
 ### Success Response
