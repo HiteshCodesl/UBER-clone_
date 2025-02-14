@@ -1,4 +1,4 @@
-# User Registration API Documentation
+# User API Documentation
 
 ## Register New User
 Endpoint to register a new user in the system. Creates a user account with the provided details and returns an authentication token.
@@ -88,3 +88,138 @@ POST /users/register
 - Password is hashed using bcrypt with 10 rounds of salting
 - JWT token is generated upon successful registration
 - Password is excluded from query results (select: false)
+
+## Login User
+Endpoint to authenticate a user and return a JWT token.
+
+### Endpoint
+```
+POST /users/login
+```
+
+### Request Body
+```json
+{
+  "email": "john@doe.com",  // Required, valid email
+  "password": "secret123"   // Required, min 6 characters
+}
+```
+
+### Success Response
+**Code:** 200 OK
+```json
+{
+  "token": "jwt.token.here"
+}
+```
+
+### Error Responses
+
+#### Validation Errors
+**Code:** 400 BAD REQUEST
+```json
+{
+  "errors": [
+    {
+      "msg": "invalid Email",
+      "param": "email",
+      "location": "body"
+    },
+    {
+      "msg": "password incorrect",
+      "param": "password",
+      "location": "body"
+    }
+  ]
+}
+```
+
+#### Authentication Errors
+**Code:** 400 BAD REQUEST
+```json
+{
+  "errors": [
+    {
+      "msg": "Invalid email or password"
+    }
+  ]
+}
+```
+
+### Validation Rules
+- **email**
+  - Required
+  - Must be valid email format
+  - Validation message: "invalid Email"
+
+- **password**
+  - Required
+  - Minimum 6 characters
+  - Validation message: "password incorrect"
+
+## Get User Profile
+Endpoint to get the authenticated user's profile.
+
+### Endpoint
+```
+GET /users/profile
+```
+
+### Headers
+```
+Authorization: Bearer <your_token_here>
+```
+
+### Success Response
+**Code:** 200 OK
+```json
+{
+  "_id": "507f1f77bcf86cd799439011",
+  "fullname": {
+    "firstname": "John",
+    "lastname": "Doe"
+  },
+  "email": "john@doe.com"
+}
+```
+
+### Error Responses
+
+#### Unauthorized
+**Code:** 401 UNAUTHORIZED
+```json
+{
+  "message": "Unauthorized"
+}
+```
+
+## Logout User
+Endpoint to log out the authenticated user.
+
+### Endpoint
+```
+GET /users/logout
+```
+
+### Headers
+```
+Authorization: Bearer <your_token_here>
+```
+
+### Success Response
+**Code:** 200 OK
+```json
+{
+  "message": "logged out"
+}
+```
+
+### Error Responses
+
+#### Unauthorized
+**Code:** 401 UNAUTHORIZED
+```json
+{
+  "message": "Unauthorized"
+}
+```
