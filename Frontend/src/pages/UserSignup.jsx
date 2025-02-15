@@ -72,8 +72,8 @@ function UserSignup() {
 
         </div>
           <div>
-            <p className="text-[11px] leading-tight">
-              By proceeding, you consent to get calls, WhatsApp or sms messages, including by automated means, from Uber and its affilate to the number provided
+            <p className="text-[10px] leading-tight">
+            This site is protected by reCAPTCHA and the Googles Privacy Policy and Terms of Service apply.
             </p>
           </div>
       </div>
