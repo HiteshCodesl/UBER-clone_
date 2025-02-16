@@ -46,9 +46,6 @@ function CaptainLogin() {
         </form>
       </div>
 
-      <div>
-        <Link to={"/captain-login"}className="bg-[#10b461] flex w-full text-white justify-center font-semi rounded px-auto py-2 my-5">Sign in as Captain</Link>
-      </div>
     </div>
   )
 }
