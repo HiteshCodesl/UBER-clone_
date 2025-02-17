@@ -18,8 +18,8 @@ module.exports.registerCaptain = async (req, res, next) => {
     }
 
     const hashedPassword = await captainModel.hashPassword(password);
-    try {
-        console.log(fullname);
+
+       
         const captain = await captainService.createCaptain({
             firstname: fullname.firstname,
             lastname: fullname.lastname,
@@ -30,16 +30,13 @@ module.exports.registerCaptain = async (req, res, next) => {
             capacity: vehicle.capacity,
             vehicleType: vehicle.vehicleType,
         })
+        const token = captain.generateAuthToken();
 
-        res.status(200).json({
-            message: "Captain registered successfully"
-        })
-    } catch (error) {
-        res.status(400).json({ message: error.message })
-    }
+        res.status(201).json({token, captain})
+   
 }
 
-module.exports.loginCaptain = async (req, res, next) => {4
+module.exports.loginCaptain = async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
@@ -49,7 +46,7 @@ module.exports.loginCaptain = async (req, res, next) => {4
         const captain = await captainModel.findOne({ email }).select("+password");
 
         if (!captain) {
-            return res.status(400).json({ message: "Captain not found" });
+            return res.status(401).json({ message: "Captain not found" });
         }
 
         const isMatch = await captain.comparePassword(password);
@@ -58,7 +55,8 @@ module.exports.loginCaptain = async (req, res, next) => {4
             return res.status(400).json({ message: "Incorrect password" });
         }
         const token = captain.generateAuthToken();
-        res.status(200).json({ token });
+        res.cookie('token',token)
+        res.status(200).json({ token, captain});
 
     }
     catch (error) {
