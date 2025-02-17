@@ -12,7 +12,7 @@ function UserSignup() {
 
        const navigate = useNavigate();
 
-       const [user, setUser] = useContext(UserDataContext)
+       const {user, setUser} = useContext(UserDataContext)
 
        const submitHandler = async(e) =>{
           e.preventDefault();
@@ -27,11 +27,16 @@ function UserSignup() {
           const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/users/register`, newUser)
 
           if(response.status === 201){
-            const data = response.data
+            const data = response.data;
+            console.log(data)
             setUser(data.user)
-            navigate("/home")
+            
+            localStorage.setItem('token', data.token)
+          
+            navigate('/home')
+           
+            
           }
-
           setFirstname('');
           setEmail('');
           setLastname('');
