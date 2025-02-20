@@ -1,7 +1,11 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { Link } from 'react-router-dom'
 
 function ConfirmRidePopUp(props) {
+  const [otp, setOtp] = useState('')
+  const submitHandler = (e)=>{
+    e.preventDefault()
+  }
   return (
     <div className='h-screen'>
     <h5 className='p-1 text-center w-[93%] absoulte top-0' onClick={() => {
@@ -48,12 +52,34 @@ function ConfirmRidePopUp(props) {
      </div>
    </div>
  </div>
- <Link to="/captain-riding" className='w-full flex justify-center bg-green-500 text-white font-semibold p-2 mt-5 rounded-lg'>Accept</Link>
 
-<button onClick={()=>{
+
+<div className='mt-6 w-full'>
+
+<form onSubmit={(e)=>{
+  submitHandler(e)
+}}>
+<div className='flex  justify-between gap-2 text-3xl mx-2 items-center p-2'>
+  <input value={otp} onChange={(e)=> setOtp(e.target.value)} type="number"  className="bg-[#eee] py-4 text-2xl font-mono  p-7 rounded-lg w-1/4 mt-3" placeholder='_' />
+
+  <input value={otp} onChange={(e)=> setOtp(e.target.value)} type="number"  className="bg-[#eee] py-4 text-2xl font-mono p-7 rounded-lg w-1/4 mt-3" placeholder='_' />
+
+  <input value={otp} onChange={(e)=> setOtp(e.target.value)} type="number"  className="bg-[#eee] py-4 text-2xl p-7 font-mono rounded-lg w-1/4 mt-3" placeholder='_' />
+
+  <input value={otp} onChange={(e)=> setOtp(e.target.value)} type="number"  className="bg-[#eee] py-4 text-2xl font-mono rounded-lg p-7 w-1/4 mt-3" placeholder='_' />
+  </div>
+  
+<Link to="/captain-riding" className='w-full flex justify-center bg-green-500 text-white font-semibold p-2 mt-5 rounded-lg'>Confirm</Link>
+
+
+<Link onClick={()=>{
 props.setConfirmRidePopUpPanel(false)
 props.setRidePopUpPanel(false)
- }} className='w-full bg-red-500 text-gray-700 font-semibold p-2 mt-5 rounded-lg'>Cancel</button>
+ }} className='w-full bg-red-500 text-gray-700 font-semibold p-2 flex justify-center mt-5 rounded-lg'>Cancel</Link>
+
+</form>
+
+</div>
 
 </div>
     </div>
